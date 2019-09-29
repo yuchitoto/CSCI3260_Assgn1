@@ -11,6 +11,9 @@ using namespace std;
 GLuint programID;
 float x_delta = 0.1f;
 int x_press_num = 0;
+int cheshire_cat = 0;
+
+std::ofstream logFile;
 
 GLuint vao[7];
 
@@ -654,7 +657,7 @@ void paintGL(void)  //always run
 
 	modelTransformMatrix = glm::mat4(1.0f);
 	modelTransformMatrix = glm::rotate(glm::mat4(), glm::radians(45.0f), glm::vec3(+0.0f, +1.0f, +0.0f));
-	modelTransformMatrix = glm::translate(modelTransformMatrix, glm::vec3(+1.41f, +2.0f, +1.41f));
+	modelTransformMatrix = glm::translate(modelTransformMatrix, glm::vec3(+1.41f, (cheshire_cat == 1) ? +2.0f : -3.0f, +1.41f));
 	glUniformMatrix4fv(modelTransformMatrixUniformLocation, 1,
 		GL_FALSE, &modelTransformMatrix[0][0]);
 
@@ -680,11 +683,17 @@ void keyboard(unsigned char key, int x, int y)
 	{
 		x_press_num += 1;
 	}
+	if (key == 'c')
+	{
+		cheshire_cat = (cheshire_cat == 0) ? 1 : 0;
+		logFile << "cheshire cat called" << std::endl;
+	}
 }
 
 
 int main(int argc, char* argv[])
 {
+	logFile.open("log.txt", std::ofstream::out | std::ofstream::trunc);
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGBA);
 	glutInitWindowSize(512, 512);
