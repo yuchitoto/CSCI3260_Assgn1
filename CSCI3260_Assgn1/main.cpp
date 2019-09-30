@@ -440,7 +440,24 @@ void sendDataToOpenGL()
 	};
 	const GLushort cc_ind[] =
 	{
-		0,2,3,1,1,4,4,9,5,8,10,10,5,6,6,7,10,8,8,9,7,4,4,11,11,16,12,15,17,17,12,13,13,14,17,15,15,14,16,11
+		0, 2, 3,
+		2, 3, 1,
+		4, 5, 9,
+		4, 9, 7,
+		5, 9, 8,
+		9, 8, 7,
+		7, 8, 10,
+		10, 8, 5,
+		5, 10, 6,
+		10, 6, 7,
+		13, 17, 12,
+		13, 14, 17,
+		14, 17, 15,
+		17, 15, 12,
+		12, 15, 16,
+		15, 16, 14,
+		14, 16, 11,
+		11, 16, 12
 	};
 
 	glGenVertexArrays(1, &vao[6]);
@@ -566,7 +583,7 @@ void tobemoved(int growth_dir)
 	case 1:
 		camHeight += (camHeight < +1.0f) ? +0.00025f : +0.0f;
 		moved[0][0] += (moved[0][0] < +0.89f) ? +0.0002225f : +0.0f;
-		moved[0][2] += (moved[0][2] < +0.448f) ? +0.000112 : +0.0f;
+		moved[0][2] += (moved[0][2] < +0.448f) ? +0.000112f : +0.0f;
 		moved[1][0] += (moved[1][0] < +0.61f) ? +0.0001525f : +0.0f;
 		moved[1][2] += (moved[1][2] < +0.34f) ? +0.000085f : +0.0f;
 		moved[2][0] += (moved[2][0] < +0.92f) ? +0.00023f : +0.0f;
@@ -575,7 +592,7 @@ void tobemoved(int growth_dir)
 	case -1:
 		camHeight -= (camHeight > -1.0f) ? +0.00025f : +0.0f;
 		moved[0][0] -= (moved[0][0] > +0.0f) ? +0.0002225f : +0.0f;
-		moved[0][2] -= (moved[0][2] > +0.0f) ? +0.000112 : +0.0f;
+		moved[0][2] -= (moved[0][2] > +0.0f) ? +0.000112f : +0.0f;
 		moved[1][0] -= (moved[1][0] > +0.0f) ? +0.0001525f : +0.0f;
 		moved[1][2] -= (moved[1][2] > +0.0f) ? +0.000085f : +0.0f;
 		moved[2][0] -= (moved[2][0] > +0.0f) ? +0.00023f : +0.0f;
@@ -615,11 +632,13 @@ void paintGL(void)  //always run
 	GLint modelTransformMatrixUniformLocation = glGetUniformLocation(programID, "modelTransformMatrix");
 	glUniformMatrix4fv(modelTransformMatrixUniformLocation, 1, GL_FALSE, &modelTransformMatrix[0][0]);
 
-	glm::mat4 viewMatrix = glm::lookAt(glm::vec3(-4.0f, +1.75f + camHeight, -4.0f), glm::vec3(+4.0f, +0.71f, +0.0f), glm::vec3(+0.0f, +1.0f, +0.0f));
+	glm::mat4 viewMatrix = glm::mat4(1.0f);
+	viewMatrix = glm::lookAt(glm::vec3(-4.0f, +1.75f + camHeight, -4.0f), glm::vec3(+4.0f, +0.71f, +0.0f), glm::vec3(+0.0f, +1.0f, +0.0f));
 	GLint viewMatrixUniformLocation = glGetUniformLocation(programID, "viewMatrix");
 	glUniformMatrix4fv(viewMatrixUniformLocation, 1, GL_FALSE, &viewMatrix[0][0]);
 
-	glm::mat4 projectionMatrix = glm::perspective(20.0f, 1.0f, 0.1f, 10.0f);
+	glm::mat4 projectionMatrix = glm::mat4(1.0f);
+	projectionMatrix = glm::perspective(20.0f, 1.0f, 0.1f, 10.0f);
 	GLint projectionMarixUniformLocation = glGetUniformLocation(programID, "projectionMatrix");
 	glUniformMatrix4fv(projectionMarixUniformLocation, 1, GL_FALSE, &projectionMatrix[0][0]);
 
@@ -628,7 +647,7 @@ void paintGL(void)  //always run
 
 	glBindVertexArray(vao[1]); //draw bottle
 
-	modelTransformMatrix = (growth<0)?glm::scale(glm::mat4(1.0f), glm::vec3(+0.0001f, +0.0001f, +0.0001f)):glm::mat4(1.0f);
+	modelTransformMatrix = (growth<0)?glm::scale(glm::mat4(), glm::vec3(+0.0001f, +0.0001f, +0.0001f)):glm::mat4(1.0f);
 	modelTransformMatrix = glm::translate(modelTransformMatrix, glm::vec3(+4.0f, +0.71f, +0.0f));
 	glUniformMatrix4fv(modelTransformMatrixUniformLocation, 1,
 		GL_FALSE, &modelTransformMatrix[0][0]);
@@ -643,7 +662,7 @@ void paintGL(void)  //always run
 
 	glBindVertexArray(vao[2]); //draw cake
 
-	modelTransformMatrix = (growth>0)?glm::scale(glm::mat4(1.0f), glm::vec3(+0.0001f, +0.0001f, +0.0001f)):glm::mat4(1.0f);
+	modelTransformMatrix = (growth>0)?glm::scale(glm::mat4(), glm::vec3(+0.0001f, +0.0001f, +0.0001f)):glm::mat4(1.0f);
 	modelTransformMatrix = glm::translate(modelTransformMatrix, glm::vec3(+3.5f, +0.0f, +0.0f));
 	glUniformMatrix4fv(modelTransformMatrixUniformLocation, 1,
 		GL_FALSE, &modelTransformMatrix[0][0]);
@@ -706,8 +725,8 @@ void paintGL(void)  //always run
 	glBindVertexArray(vao[6]);	//cheshire cat
 
 	modelTransformMatrix = glm::mat4(1.0f);
-	modelTransformMatrix = glm::rotate(glm::mat4(), glm::radians(+45.0f), glm::vec3(+0.0f, +1.0f, +0.0f));
-	modelTransformMatrix = glm::translate(modelTransformMatrix, glm::vec3(+1.41f, (cheshire_cat == 1) ? +2.0f : -3.0f, +1.41f));
+	modelTransformMatrix = glm::rotate(glm::mat4(), 0.620f, glm::vec3(+0.0f, +1.0f, +0.0f));
+	modelTransformMatrix = glm::translate(modelTransformMatrix, glm::vec3(+3.0f, (cheshire_cat > 0) ? +0.2f : -3.0f, +1.0f));
 	glUniformMatrix4fv(modelTransformMatrixUniformLocation, 1,
 		GL_FALSE, &modelTransformMatrix[0][0]);
 
@@ -717,7 +736,7 @@ void paintGL(void)  //always run
 	projectionMatrix = projectionMatrix;
 	glUniformMatrix4fv(projectionMarixUniformLocation, 1, GL_FALSE, &projectionMatrix[0][0]);
 
-	glDrawElements(GL_TRIANGLE_STRIP, 40, GL_UNSIGNED_SHORT, 0);	//end cheshire cat
+	glDrawElements(GL_TRIANGLES, 54, GL_UNSIGNED_SHORT, 0);	//end cheshire cat
 	
 	glFlush(); //force execution of GL commands
 	glutPostRedisplay();
@@ -738,11 +757,12 @@ void keyboard(unsigned char key, int x, int y)
 	if (key == 'c')
 	{
 		cheshire_cat = (cheshire_cat == 0) ? 1 : 0;
-		logFile << "cheshire cat called" << std::endl;
+		logFile << "cheshire cat called " << cheshire_cat << std::endl;
 	}
 	if (key == 'r')
 	{
 		growth = 0;
+		logFile << "ewige wiederkunft!!!" << std::endl;
 	}
 }
 
