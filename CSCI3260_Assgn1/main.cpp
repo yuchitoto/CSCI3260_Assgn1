@@ -638,7 +638,7 @@ void paintGL(void)  //always run
 	glUniformMatrix4fv(viewMatrixUniformLocation, 1, GL_FALSE, &viewMatrix[0][0]);
 
 	glm::mat4 projectionMatrix = glm::mat4(1.0f);
-	projectionMatrix = glm::perspective(20.0f, 1.0f, 0.1f, 10.0f);
+	projectionMatrix = glm::perspective(45.0f, 1.0f, 0.1f, 10.0f);
 	GLint projectionMarixUniformLocation = glGetUniformLocation(programID, "projectionMatrix");
 	glUniformMatrix4fv(projectionMarixUniformLocation, 1, GL_FALSE, &projectionMatrix[0][0]);
 
