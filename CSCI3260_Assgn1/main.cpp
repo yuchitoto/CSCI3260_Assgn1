@@ -34,10 +34,10 @@ void sendDataToOpenGL()
 	};
 	const GLfloat floor_color[] =
 	{
-		+1.0f, +0.0f, +0.0f,
-		+0.0f, +1.0f, +0.0f,
-		+0.0f, +0.0f, +1.0f,
-		+1.0f, +1.0f, +1.0f,
+		+0.0f, +0.0f, +0.0f,
+		+0.0f, +0.0f, +0.0f,
+		+0.0f, +0.0f, +0.0f,
+		+0.0f, +0.0f, +0.0f,
 	};
 	const GLushort floor_ind[] =
 	{
@@ -66,7 +66,7 @@ void sendDataToOpenGL()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_ibo[0]);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(floor_ind), floor_ind, GL_STATIC_DRAW);
 	
-	//vao 1 mountain b
+	//vao 1
 	//declare const
 	const GLfloat bottle_vert[] =
 	{
@@ -195,50 +195,23 @@ void sendDataToOpenGL()
 
 	const GLfloat table_vert[] =
 	{
-		//up surf 0.71
+		-0.1f, +0.0f, -0.1f,
+		+0.1f, +0.0f, -0.1f,
+		+0.1f, +0.0f, +0.1f,
+		-0.1f, +0.0f, +0.1f,
+
 		-0.3f, +0.71f, -0.3f,
 		+0.3f, +0.71f, -0.3f,
 		+0.3f, +0.71f, +0.3f,
-		-0.3f, +0.71f, +0.3f,
-		//low surf 0.7
-		-0.3f, +0.70f, -0.3f,
-		+0.3f, +0.70f, -0.3f,
-		+0.3f, +0.70f, +0.3f,
-		-0.3f, +0.70f, +0.3f,
-		//leg
-		-0.15f, +0.70f, -0.15f,
-		+0.15f, +0.70f, -0.15f,
-		+0.15f, +0.70f, +0.15f,
-		-0.15f, +0.70f, +0.15f,
-
-		-0.1f, +0.35f, -0.1f,
-		+0.1f, +0.35f, -0.1f,
-		+0.1f, +0.35f, +0.1f,
-		-0.1f, +0.35f, +0.1f,
-
-		-0.15f, +0.0f, -0.15f,
-		+0.15f, +0.0f, -0.15f,
-		+0.15f, +0.0f, +0.15f,
-		-0.15f, +0.0f, +0.15f
+		-0.3f, +0.71f, +0.3f
 	};
 	const GLfloat table_color[] =
 	{
-		+1.0f, +1.0f, +1.0f,
-		+1.0f, +1.0f, +1.0f,
-		+1.0f, +1.0f, +1.0f,
-		+1.0f, +1.0f, +1.0f,
-		+1.0f, +1.0f, +1.0f,
-		+1.0f, +1.0f, +1.0f,
-		+1.0f, +1.0f, +1.0f,
-		+1.0f, +1.0f, +1.0f,
-		+1.0f, +1.0f, +1.0f,
-		+1.0f, +1.0f, +1.0f,
-		+1.0f, +1.0f, +1.0f,
-		+1.0f, +1.0f, +1.0f,
-		+1.0f, +1.0f, +1.0f,
-		+1.0f, +1.0f, +1.0f,
-		+1.0f, +1.0f, +1.0f,
-		+1.0f, +1.0f, +1.0f,
+		+0.5f, +0.5f, +0.5f,
+		+0.5f, +0.5f, +0.5f,
+		+0.5f, +0.5f, +0.5f,
+		+0.5f, +0.5f, +0.5f,
+
 		+1.0f, +1.0f, +1.0f,
 		+1.0f, +1.0f, +1.0f,
 		+1.0f, +1.0f, +1.0f,
@@ -246,7 +219,18 @@ void sendDataToOpenGL()
 	};
 	const GLushort table_ind[] =
 	{
-		0,1,3,2,2,0,0,4,1,5,2,6,3,7,0,4,4,8,5,9,6,10,7,11,4,8,8,12,9,13,10,14,11,13,8,12,12,16,13,17,10,18,15,19,12,16
+		0, 1, 3,
+		1, 3, 2,
+		0, 4, 1,
+		1,4,5,
+		1,5,2,
+		2,5,6,
+		3,2,6,
+		6,7,3,
+		4,7,3,
+		0,4,3,
+		4,5,7,
+		5,7,6
 	};
 
 	glGenVertexArrays(1, &vao[3]);
@@ -267,7 +251,7 @@ void sendDataToOpenGL()
 
 	//table ind
 	glGenBuffers(1, &vbo_ibo[3]);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo[3]);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_ibo[3]);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(table_ind), table_ind, GL_STATIC_DRAW);
 
 	//vao 4, 5 chair
@@ -387,29 +371,19 @@ void sendDataToOpenGL()
 	{
 		//mouth
 		-0.12f, +0.0f, +0.0f,
-		+0.12f, +0.0f, +0.0f,
-		+0.0f, -0.06f, +0.0f,
+		+0.0f, -0.04f, +0.0f,
 		+0.0f, -0.10f, +0.0f,
+		+0.12f, +0.0f, +0.0f,
 		//lft eye
 		-0.12f, +0.07f, +0.0f,
 		-0.085f, +0.10f, +0.0f,
 		-0.05f, +0.07f, +0.0f,
 		-0.085f, +0.04f, +0.0f,
-
-		-0.085f, +0.07f, +0.0f,
-
-		-0.09f, +0.07f, +0.0f,
-		-0.08f, +0.07f, +0.0f,
 		//rht eye
 		+0.12f, +0.07f, +0.0f,
 		+0.085f, +0.10f, +0.0f,
 		+0.05f, +0.07f, +0.0f,
 		+0.085f, +0.04f, +0.0f,
-
-		+0.085f, +0.07f, +0.0f,
-
-		+0.09f, +0.07f, +0.0f,
-		+0.08f, +0.07f, +0.0f,
 	};
 	const GLfloat cc_color[] =
 	{
@@ -419,45 +393,23 @@ void sendDataToOpenGL()
 		+1.0f, +1.0f, +1.0f,
 
 		+1.0f, +1.0f, +1.0f,
-		+0.0f, +0.0f, +0.0f,
 		+1.0f, +1.0f, +1.0f,
-		+0.0f, +0.0f, +0.0f,
-
+		+1.0f, +1.0f, +1.0f,
 		+1.0f, +1.0f, +1.0f,
 
-		+0.0f, +0.0f, +0.0f,
-		+0.0f, +0.0f, +0.0f,
-
 		+1.0f, +1.0f, +1.0f,
-		+0.0f, +0.0f, +0.0f,
 		+1.0f, +1.0f, +1.0f,
-		+0.0f, +0.0f, +0.0f,
-
 		+1.0f, +1.0f, +1.0f,
-
-		+0.0f, +0.0f, +0.0f,
-		+0.0f, +0.0f, +0.0f,
+		+1.0f, +1.0f, +1.0f,
 	};
 	const GLushort cc_ind[] =
 	{
-		0, 2, 3,
-		2, 3, 1,
-		4, 5, 9,
-		4, 9, 7,
-		5, 9, 8,
-		9, 8, 7,
-		7, 8, 10,
-		10, 8, 5,
-		5, 10, 6,
-		10, 6, 7,
-		13, 17, 12,
-		13, 14, 17,
-		14, 17, 15,
-		17, 15, 12,
-		12, 15, 16,
-		15, 16, 14,
-		14, 16, 11,
-		11, 16, 12
+		0, 1, 2,
+		1, 2, 3,
+		4, 5, 7,
+		5, 6, 7,
+		8, 9, 11,
+		9, 10, 11
 	};
 
 	glGenVertexArrays(1, &vao[6]);
@@ -473,12 +425,12 @@ void sendDataToOpenGL()
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
 	//cat c
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (char*)sizeof(cc_vert));
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (char*)sizeof(cc_vert));
 
 	//cat i
 	glGenBuffers(1, &vbo_ibo[6]);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo[6]);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_ibo[6]);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(cc_ind), cc_ind, GL_STATIC_DRAW);
 }
 
@@ -570,6 +522,7 @@ void initializedGL(void) //run only once
 
 void wiederkunft(void)
 {
+	camHeight = 0.0f;
 	moved[0][0] = 0.0f;	moved[0][1] = 0.0f;	moved[0][2] = 0.0f;
 	moved[1][0] = 0.0f;	moved[1][1] = 0.0f;	moved[1][2] = 0.0f;
 	moved[2][0] = 0.0f;	moved[2][1] = 0.0f;	moved[2][2] = 0.0f;
@@ -638,7 +591,7 @@ void paintGL(void)  //always run
 	glUniformMatrix4fv(viewMatrixUniformLocation, 1, GL_FALSE, &viewMatrix[0][0]);
 
 	glm::mat4 projectionMatrix = glm::mat4(1.0f);
-	projectionMatrix = glm::perspective(45.0f, 1.0f, 0.1f, 10.0f);
+	projectionMatrix = glm::perspective(45.0f, 1.0f, 0.001f, 100.0f);
 	GLint projectionMarixUniformLocation = glGetUniformLocation(programID, "projectionMatrix");
 	glUniformMatrix4fv(projectionMarixUniformLocation, 1, GL_FALSE, &projectionMatrix[0][0]);
 
@@ -678,9 +631,8 @@ void paintGL(void)  //always run
 	glBindVertexArray(vao[3]); //table
 
 	modelTransformMatrix = glm::mat4(1.0f);
-	modelTransformMatrix = glm::translate(glm::mat4(), glm::vec3(+4.0f + moved[0][0], +0.0f + moved[0][1], +0.0f + moved[0][2]));
-	glUniformMatrix4fv(modelTransformMatrixUniformLocation, 1,
-		GL_FALSE, &modelTransformMatrix[0][0]);
+	modelTransformMatrix = glm::translate(modelTransformMatrix, glm::vec3(+4.5f + moved[0][0], +0.0f + moved[0][1], +0.0f + moved[0][2]));
+	glUniformMatrix4fv(modelTransformMatrixUniformLocation, 1, GL_FALSE, &modelTransformMatrix[0][0]);
 
 	viewMatrix = viewMatrix;
 	glUniformMatrix4fv(viewMatrixUniformLocation, 1, GL_FALSE, &viewMatrix[0][0]);
@@ -689,7 +641,7 @@ void paintGL(void)  //always run
 	glUniformMatrix4fv(projectionMarixUniformLocation, 1, GL_FALSE, &projectionMatrix[0][0]);
 
 
-	glDrawElements(GL_TRIANGLE_STRIP, 46, GL_UNSIGNED_SHORT, 0);	//end table
+	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_SHORT, 0);	//end table
 
 	glBindVertexArray(vao[4]); //chair1
 
@@ -709,8 +661,9 @@ void paintGL(void)  //always run
 	glBindVertexArray(vao[5]);	//chair2
 
 	modelTransformMatrix = glm::mat4(1.0f);
-	modelTransformMatrix = glm::rotate(glm::mat4(), glm::radians((growth < 1) ? +135.0f : +45.0f), glm::vec3(+0.0f, +1.0f, +0.0f));
 	modelTransformMatrix = glm::translate(modelTransformMatrix, glm::vec3(+4.0f + moved[2][0], +0.0f + moved[2][1], -0.5f + moved[2][2]));
+	modelTransformMatrix = glm::rotate(modelTransformMatrix, glm::radians((growth < 1) ? +135.0f : +45.0f), glm::vec3(+0.0f, +1.0f, +0.0f));
+	
 	glUniformMatrix4fv(modelTransformMatrixUniformLocation, 1,
 		GL_FALSE, &modelTransformMatrix[0][0]);
 
@@ -725,8 +678,8 @@ void paintGL(void)  //always run
 	glBindVertexArray(vao[6]);	//cheshire cat
 
 	modelTransformMatrix = glm::mat4(1.0f);
-	modelTransformMatrix = glm::rotate(glm::mat4(), 0.620f, glm::vec3(+0.0f, +1.0f, +0.0f));
-	modelTransformMatrix = glm::translate(modelTransformMatrix, glm::vec3(+3.0f, (cheshire_cat > 0) ? +0.2f : -3.0f, +1.0f));
+	modelTransformMatrix = glm::translate(modelTransformMatrix, glm::vec3(-3.2f, (cheshire_cat > 0)?+1.70f:-3.0f, -3.5f));
+	modelTransformMatrix = glm::rotate(modelTransformMatrix, +1.107f, glm::vec3(+0.0f, +1.0f, +0.0f));
 	glUniformMatrix4fv(modelTransformMatrixUniformLocation, 1,
 		GL_FALSE, &modelTransformMatrix[0][0]);
 
@@ -736,7 +689,7 @@ void paintGL(void)  //always run
 	projectionMatrix = projectionMatrix;
 	glUniformMatrix4fv(projectionMarixUniformLocation, 1, GL_FALSE, &projectionMatrix[0][0]);
 
-	glDrawElements(GL_TRIANGLES, 54, GL_UNSIGNED_SHORT, 0);	//end cheshire cat
+	glDrawElements(GL_TRIANGLES, 18, GL_UNSIGNED_SHORT, 0);	//end cheshire cat
 	
 	glFlush(); //force execution of GL commands
 	glutPostRedisplay();
@@ -756,7 +709,7 @@ void keyboard(unsigned char key, int x, int y)
 	}
 	if (key == 'c')
 	{
-		cheshire_cat = (cheshire_cat == 0) ? 1 : 0;
+		cheshire_cat = (cheshire_cat != 1) ? 1 : 0;
 		logFile << "cheshire cat called " << cheshire_cat << std::endl;
 	}
 	if (key == 'r')
