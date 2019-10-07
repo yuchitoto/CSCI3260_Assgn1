@@ -34,10 +34,10 @@ void sendDataToOpenGL()
 	};
 	const GLfloat floor_color[] =
 	{
-		+0.0f, +0.0f, +0.0f,
-		+0.0f, +0.0f, +0.0f,
-		+0.0f, +0.0f, +0.0f,
-		+0.0f, +0.0f, +0.0f,
+		+0.3f, +0.3f, +0.3f,
+		+0.3f, +0.3f, +0.3f,
+		+0.3f, +0.3f, +0.3f,
+		+0.3f, +0.3f, +0.3f,
 	};
 	const GLushort floor_ind[] =
 	{
@@ -193,6 +193,7 @@ void sendDataToOpenGL()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_ibo[2]);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(cake_ind), cake_ind, GL_STATIC_DRAW);
 
+	//vao 3
 	const GLfloat table_vert[] =
 	{
 		-0.1f, +0.0f, -0.1f,
@@ -200,10 +201,10 @@ void sendDataToOpenGL()
 		+0.1f, +0.0f, +0.1f,
 		-0.1f, +0.0f, +0.1f,
 
-		-0.3f, +0.71f, -0.3f,
-		+0.3f, +0.71f, -0.3f,
-		+0.3f, +0.71f, +0.3f,
-		-0.3f, +0.71f, +0.3f
+		-0.5f, +0.7f, -0.5f,
+		+0.5f, +0.7f, -0.5f,
+		+0.5f, +0.7f, +0.5f,
+		-0.5f, +0.7f, +0.5f,
 	};
 	const GLfloat table_color[] =
 	{
@@ -219,37 +220,22 @@ void sendDataToOpenGL()
 	};
 	const GLushort table_ind[] =
 	{
-		0, 1, 3,
-		1, 3, 2,
-		0, 4, 1,
-		1,4,5,
-		1,5,2,
-		2,5,6,
-		3,2,6,
-		6,7,3,
-		4,7,3,
-		0,4,3,
-		4,5,7,
-		5,7,6
+		0,1,3,2,2,0,0,4,1,5,2,6,3,7,0,4,4,5,7,6
 	};
-
 	glGenVertexArrays(1, &vao[3]);
-	glBindVertexArray(vao[3]);
+	glBindVertexArray(vao[3]);  //first VAO
 	glGenBuffers(1, &vbo[3]);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo[3]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(table_vert) + sizeof(table_color), NULL, GL_STATIC_DRAW);
 	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(table_vert), table_vert);
 	glBufferSubData(GL_ARRAY_BUFFER, sizeof(table_vert), sizeof(table_color), table_color);
-
-	//table vert
+	//vertex position
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
-
-	//table color
+	//vertex color
 	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (char*)sizeof(table_vert));
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (char*)(sizeof(table_vert)));
 
-	//table ind
 	glGenBuffers(1, &vbo_ibo[3]);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbo_ibo[3]);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(table_ind), table_ind, GL_STATIC_DRAW);
@@ -581,7 +567,7 @@ void paintGL(void)  //always run
 
 	glBindVertexArray(vao[0]); //floor
 	glm::mat4 modelTransformMatrix = glm::mat4(1.0f);
-	modelTransformMatrix = glm::translate(glm::mat4(), glm::vec3(+0.0f, +0.0f, +0.0f));
+	modelTransformMatrix = glm::translate(glm::mat4(), glm::vec3(+0.0f, -0.3f, +0.0f));
 	GLint modelTransformMatrixUniformLocation = glGetUniformLocation(programID, "modelTransformMatrix");
 	glUniformMatrix4fv(modelTransformMatrixUniformLocation, 1, GL_FALSE, &modelTransformMatrix[0][0]);
 
@@ -628,10 +614,11 @@ void paintGL(void)  //always run
 
 	glDrawElements(GL_TRIANGLE_STRIP, 20, GL_UNSIGNED_SHORT, 0);	//end cake
 
-	glBindVertexArray(vao[3]); //table
+	/*glBindVertexArray(vao[3]); //table
 
 	modelTransformMatrix = glm::mat4(1.0f);
-	modelTransformMatrix = glm::translate(modelTransformMatrix, glm::vec3(+4.5f + moved[0][0], +0.0f + moved[0][1], +0.0f + moved[0][2]));
+	//modelTransformMatrix = glm::scale(modelTransformMatrix, glm::vec3(+10.0f, +10.0f, +10.0f));
+	modelTransformMatrix = glm::translate(modelTransformMatrix, glm::vec3(-3.0f + moved[0][0], +2.0f + moved[0][1], -3.0f + moved[0][2]));
 	glUniformMatrix4fv(modelTransformMatrixUniformLocation, 1, GL_FALSE, &modelTransformMatrix[0][0]);
 
 	viewMatrix = viewMatrix;
@@ -641,7 +628,7 @@ void paintGL(void)  //always run
 	glUniformMatrix4fv(projectionMarixUniformLocation, 1, GL_FALSE, &projectionMatrix[0][0]);
 
 
-	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_SHORT, 0);	//end table
+	glDrawElements(GL_TRIANGLE_STRIP, 20, GL_UNSIGNED_SHORT, 0);	//end table*/
 
 	glBindVertexArray(vao[4]); //chair1
 
@@ -678,7 +665,7 @@ void paintGL(void)  //always run
 	glBindVertexArray(vao[6]);	//cheshire cat
 
 	modelTransformMatrix = glm::mat4(1.0f);
-	modelTransformMatrix = glm::translate(modelTransformMatrix, glm::vec3(-3.2f, (cheshire_cat > 0)?+1.70f:-3.0f, -3.5f));
+	modelTransformMatrix = glm::translate(modelTransformMatrix, glm::vec3(-3.2f, (cheshire_cat > 0)?(+1.70f + camHeight):-3.0f, -3.5f));
 	modelTransformMatrix = glm::rotate(modelTransformMatrix, +1.107f, glm::vec3(+0.0f, +1.0f, +0.0f));
 	glUniformMatrix4fv(modelTransformMatrixUniformLocation, 1,
 		GL_FALSE, &modelTransformMatrix[0][0]);
